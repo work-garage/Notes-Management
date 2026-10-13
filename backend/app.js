@@ -9,22 +9,13 @@ const noteRoutes = require('./routes/noteRoutes');
 
 const app = express();
 
-// ─── Security ─────────────────────────────────────────────────────────────────
-// NOTE: upgrade-insecure-requests is removed from CSP and HSTS is disabled
-// while the site runs over plain HTTP. Both should be re-enabled once HTTPS
-// (Certbot / ACM) is configured on this server.
 app.use(helmet({
-  // Drop the CSP directive that rewrites http:// asset URLs to https://.
-  // On an HTTP-only deployment this makes the browser fail to load all JS/CSS,
-  // producing a blank page. All other CSP defaults remain active.
   contentSecurityPolicy: {
     directives: {
       ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-      upgradeInsecureRequests: null, // remove — no HTTPS yet
+      'upgrade-insecure-requests': null,
     },
   },
-  // HSTS over plain HTTP is ignored by browsers anyway; disable it explicitly
-  // so we don't accidentally pin visitors before HTTPS is ready.
   strictTransportSecurity: false,
 }));
 
