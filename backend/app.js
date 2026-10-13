@@ -8,6 +8,8 @@ const authRoutes = require('./routes/authRoutes');
 const noteRoutes = require('./routes/noteRoutes');
 
 const app = express();
+// Trust the local Nginx reverse proxy.
+app.set('trust proxy', 'loopback');
 
 app.use(helmet({
   contentSecurityPolicy: {
